@@ -33,7 +33,7 @@ const Dashboard = () => {
     }
   }, [dispatch, user, refreshKey]);
 
-  // 🗺️ Generar marcadores para el mapa
+  //  Generar marcadores para el mapa
   useEffect(() => {
     if (!list?.length) {
       setMarkersData([]);
