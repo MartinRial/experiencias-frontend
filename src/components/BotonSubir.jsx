@@ -11,21 +11,21 @@ export default function BotonSubir({ onFileSelect }) {
     const file = event.target.files[0];
     if (!file) return;
 
-    // ✅ Limite de tamaño: tamanio megas
+    //  Limite de tamaño: tamanio megas
     const maxSize = tamanioMegas * 1024 * 1024; // tamanio megas
     if (file.size > maxSize) {
       alert(`El archivo es demasiado grande. Máximo ${tamanioMegas}MB.`);
       return;
     }
 
-    // ✅ Limitar extensiones
+    //  Limitar extensiones
     // const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
     // if (!allowedTypes.includes(file.type)) {
     //   alert("Formato de archivo no permitido. Solo JPG, PNG o GIF.");
     //   return;
     // }
 
-    // ✅ Si pasa las validaciones, actualizar estado y pasar al padre
+    //  Si pasa las validaciones, actualizar estado y pasar al padre
     setFileName(file.name);
     onFileSelect(file);
   };
