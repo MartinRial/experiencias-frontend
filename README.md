@@ -23,10 +23,10 @@ El frontend consume una **API REST desarrollada en Node.js**, manteniendo una se
 ##  Demo y Backend
 
 -  **Demo en vivo (Frontend):** https://frontendexp2.vercel.app  
--  **API Backend:** https://experiencias-uy.vercel.app/api/v1  
+-  **API Backend:** https://experiencias-uy.vercel.app/api/v1 (en mantenimiento)
 
 Repositorio del backend:
-> https://github.com/MartinRial/experiencias-uy-backend *(ajustar si el nombre difiere)*
+> https://github.com/MartinRial/experiencias-uy
 
 ---
 
@@ -136,7 +136,7 @@ src/
 
 ```bash
 # Clonar el repositorio
-git clone https://github.com/MartinRial/experiencias-uy-frontend.git
+git clone https://github.com/MartinRial/experiencias-frontend
 cd experiencias-uy-frontend
 
 # Instalar dependencias
