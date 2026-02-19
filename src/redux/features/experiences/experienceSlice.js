@@ -16,8 +16,8 @@ const normalizeExp = (exp) => {
     images: Array.isArray(exp.images) ? exp.images : [],
   };
   
-  console.log("✅ SLICE - Experiencia normalizada:", normalized);
-  console.log("🖼️ SLICE - Imágenes normalizadas:", normalized.images);
+  console.log(" SLICE - Experiencia normalizada:", normalized);
+  console.log(" SLICE - Imágenes normalizadas:", normalized.images);
   
   return normalized;
 };
@@ -47,12 +47,12 @@ const experienciasSlice = createSlice({
       .addCase(getExperienciasThunk.fulfilled, (state, action) => {
         state.loading = false;
         state.list = (action.payload || []).map(normalizeExp);
-        console.log("✅ SLICE - Experiencias cargadas (getAll):", state.list.length);
+        console.log("SLICE - Experiencias cargadas (getAll):", state.list.length);
       })
       .addCase(getExperienciasThunk.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || "Error al cargar experiencias";
-        console.error("❌ SLICE - Error getAll:", action.payload);
+        console.error("SLICE - Error getAll:", action.payload);
       });
 
     // ===== GET BY USER =====
@@ -64,12 +64,12 @@ const experienciasSlice = createSlice({
       .addCase(getExperienciasByUserThunk.fulfilled, (state, action) => {
         state.loading = false;
         state.list = (action.payload || []).map(normalizeExp);
-        console.log("✅ SLICE - Experiencias cargadas (byUser):", state.list.length);
+        console.log("SLICE - Experiencias cargadas (byUser):", state.list.length);
       })
       .addCase(getExperienciasByUserThunk.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || "Error al cargar tus experiencias";
-        console.error("❌ SLICE - Error byUser:", action.payload);
+        console.error("SLICE - Error byUser:", action.payload);
       });
 
     // ===== ADD =====
@@ -83,15 +83,15 @@ const experienciasSlice = createSlice({
         console.log("📥 SLICE - Payload recibido (ADD):", action.payload);
         
         const newExp = normalizeExp(action.payload);
-        console.log("✅ SLICE - Nueva experiencia normalizada:", newExp);
+        console.log("SLICE - Nueva experiencia normalizada:", newExp);
         
         state.list.unshift(newExp);
-        console.log("📦 SLICE - Total experiencias:", state.list.length);
+        console.log("SLICE - Total experiencias:", state.list.length);
       })
       .addCase(addExperienciaThunk.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || "Error al agregar experiencia";
-        console.error("❌ SLICE - Error ADD:", action.payload);
+        console.error("SLICE - Error ADD:", action.payload);
       });
 
     // ===== UPDATE =====
@@ -103,26 +103,26 @@ const experienciasSlice = createSlice({
       .addCase(updateExperienciaThunk.fulfilled, (state, action) => {
         state.loading = false;
         
-        console.log("📥 SLICE - Payload UPDATE:", action.payload);
+        console.log("SLICE - Payload UPDATE:", action.payload);
         
         const updated = normalizeExp(action.payload);
-        console.log("🔍 SLICE - Buscando experiencia con ID:", updated.id);
+        console.log("SLICE - Buscando experiencia con ID:", updated.id);
         
         const idx = state.list.findIndex((e) => e.id === updated.id);
         
         if (idx !== -1) {
-          console.log(`✅ SLICE - Experiencia encontrada en índice ${idx}, actualizando...`);
+          console.log(`SLICE - Experiencia encontrada en índice ${idx}, actualizando...`);
           state.list[idx] = updated;
         } else {
-          console.warn("⚠️ SLICE - Experiencia NO encontrada para actualizar:", updated.id);
+          console.warn("SLICE - Experiencia NO encontrada para actualizar:", updated.id);
         }
         
-        console.log("📦 SLICE - Lista después de UPDATE:", state.list.length);
+        console.log("SLICE - Lista después de UPDATE:", state.list.length);
       })
       .addCase(updateExperienciaThunk.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || "Error al actualizar experiencia";
-        console.error("❌ SLICE - Error UPDATE:", action.payload);
+        console.error("SLICE - Error UPDATE:", action.payload);
       });
 
     // ===== DELETE =====
@@ -130,37 +130,37 @@ const experienciasSlice = createSlice({
       .addCase(deleteExperienciaThunk.pending, (state) => {
         state.loading = true;
         state.error = null;
-        console.log("⏳ SLICE - Iniciando eliminación...");
+        console.log("SLICE - Iniciando eliminación...");
       })
       .addCase(deleteExperienciaThunk.fulfilled, (state, action) => {
         state.loading = false;
         
         const deletedId = action.payload;
-        console.log("🗑️ SLICE - ID a eliminar:", deletedId);
-        console.log("📦 SLICE - Lista ANTES:", state.list.length, "experiencias");
+        console.log(" SLICE - ID a eliminar:", deletedId);
+        console.log(" SLICE - Lista ANTES:", state.list.length, "experiencias");
         
         // 👇 CORRECCIÓN: Solo filtrar por 'id' ya que normalizamos
         const lengthBefore = state.list.length;
         state.list = state.list.filter((e) => {
           const keep = e.id !== deletedId;
           if (!keep) {
-            console.log("🗑️ SLICE - Eliminando experiencia:", e.title);
+            console.log("SLICE - Eliminando experiencia:", e.title);
           }
           return keep;
         });
         
         const lengthAfter = state.list.length;
-        console.log("📦 SLICE - Lista DESPUÉS:", lengthAfter, "experiencias");
-        console.log(`✅ SLICE - Eliminadas: ${lengthBefore - lengthAfter} experiencia(s)`);
+        console.log(" SLICE - Lista DESPUÉS:", lengthAfter, "experiencias");
+        console.log(`SLICE - Eliminadas: ${lengthBefore - lengthAfter} experiencia(s)`);
         
         if (lengthBefore === lengthAfter) {
-          console.warn("⚠️ SLICE - NO se eliminó ninguna experiencia. Verificar ID:", deletedId);
+          console.warn("SLICE - NO se eliminó ninguna experiencia. Verificar ID:", deletedId);
         }
       })
       .addCase(deleteExperienciaThunk.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || "Error al eliminar experiencia";
-        console.error("❌ SLICE - Error DELETE:", action.payload);
+        console.error(" SLICE - Error DELETE:", action.payload);
       });
   },
 });
