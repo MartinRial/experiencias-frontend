@@ -71,7 +71,6 @@ Repositorio del backend:
 ---
 
 ##  Arquitectura y Stack Tecnológico
-```text
 | Categoría | Tecnología |
 |---|---|
 | Framework UI | React 19 + Vite 5 |
@@ -87,11 +86,10 @@ Repositorio del backend:
 | Testing | Jest · Testing Library · JSDOM |
 | Linting | ESLint 9 |
 | Deploy | Vercel |
-```
 ---
 
 ##  Estructura del Proyecto
-
+```text
 src/
 ├── assets/ # Recursos estáticos
 ├── components/ # Componentes de la UI
@@ -111,6 +109,7 @@ src/
 ├── styles/ # Estilos por componente
 ├── utils/ # Utilidades y datos auxiliares
 └── i18n.js # Configuración de internacionalización
+```
 
 ---
 
