@@ -55,7 +55,7 @@ const Login = () => {
           toast.error(result.payload || "Error al iniciar sesión");
         }
       } catch (err) {
-        console.error("❌ Error en login:", err);
+        console.error("Error en login:", err);
         toast.error("Error inesperado al iniciar sesión");
       }
     },
