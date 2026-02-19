@@ -44,7 +44,7 @@ const AddExperience = () => {
         const res = await axios.get(`${API_URL}/categories`);
         setCategories(Array.isArray(res.data?.data) ? res.data.data : []);
       } catch (err) {
-        console.error("❌ Error categorías:", err);
+        console.error(" Error categorías:", err);
         toast.error("No se pudieron cargar las categorías");
       } finally {
         setLoadingCategories(false);
@@ -108,16 +108,16 @@ const AddExperience = () => {
       images: imagesUrls,
     };
 
-    console.log("📤 PAYLOAD A ENVIAR:", JSON.stringify(payload, null, 2));
+    console.log(" PAYLOAD A ENVIAR:", JSON.stringify(payload, null, 2));
     console.log("🖼️ IMÁGENES:", imagesUrls);
 
     const result = await dispatch(addExperienciaThunk(payload));
 
-    console.log("📥 RESULTADO:", result);
+    console.log(" RESULTADO:", result);
 
     if (addExperienciaThunk.fulfilled.match(result)) {
-      console.log("✅ Experiencia creada:", result.payload);
-      toast.success("Experiencia creada exitosamente 🎉");
+      console.log(" Experiencia creada:", result.payload);
+      toast.success("Experiencia creada exitosamente ");
       
       // Reset
       setForm({
@@ -132,7 +132,7 @@ const AddExperience = () => {
       setImagesUrls([]);
       uploaderRef.current?.reset?.();
     } else {
-      console.error("❌ Error:", result.payload);
+      console.error(" Error:", result.payload);
       toast.error(result.payload || "Error al crear la experiencia");
     }
   };
