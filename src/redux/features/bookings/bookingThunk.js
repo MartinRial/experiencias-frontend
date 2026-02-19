@@ -5,13 +5,13 @@ import {
   getMyBookingsService,
 } from "../../../services/bookingServices";
 
-// 🟢 Crear reserva
+//  Crear reserva
 export const createBookingThunk = createAsyncThunk(
   "bookings/create",
   async (reserva, { rejectWithValue }) => {
     try {
       const response = await createBookingService(reserva);
-      return response.data.data; // ✅ la reserva creada
+      return response.data.data; //  la reserva creada
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message || "Error al crear la reserva"
@@ -20,7 +20,7 @@ export const createBookingThunk = createAsyncThunk(
   }
 );
 
-// 🟢 Obtener reservas del usuario
+//  Obtener reservas del usuario
 export const getMyBookingsThunk = createAsyncThunk(
   "bookings/getMyBookings",
   async (_, { rejectWithValue }) => {
