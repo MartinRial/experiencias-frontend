@@ -22,8 +22,8 @@ El frontend consume una **API REST desarrollada en Node.js**, manteniendo una se
 
 ##  Demo y Backend
 
-- 🔗 **Demo en vivo (Frontend):** https://frontendexp2.vercel.app  
-- 🔗 **API Backend:** https://experiencias-uy.vercel.app/api/v1  
+-  **Demo en vivo (Frontend):** https://frontendexp2.vercel.app  
+-  **API Backend:** https://experiencias-uy.vercel.app/api/v1  
 
 Repositorio del backend:
 > https://github.com/MartinRial/experiencias-uy-backend *(ajustar si el nombre difiere)*
@@ -71,7 +71,7 @@ Repositorio del backend:
 ---
 
 ##  Arquitectura y Stack Tecnológico
-
+```text
 | Categoría | Tecnología |
 |---|---|
 | Framework UI | React 19 + Vite 5 |
@@ -87,7 +87,7 @@ Repositorio del backend:
 | Testing | Jest · Testing Library · JSDOM |
 | Linting | ESLint 9 |
 | Deploy | Vercel |
-
+```
 ---
 
 ##  Estructura del Proyecto
