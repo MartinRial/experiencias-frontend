@@ -9,7 +9,7 @@ La aplicación permite conectar **creadores de experiencias** con **usuarios fin
 
 ---
 
-## 📖 Descripción
+##  Descripción
 
 **Experiencias UY** es una plataforma web que permite:
 
@@ -20,7 +20,7 @@ El frontend consume una **API REST desarrollada en Node.js**, manteniendo una se
 
 ---
 
-## 🌐 Demo y Backend
+##  Demo y Backend
 
 - 🔗 **Demo en vivo (Frontend):** https://frontendexp2.vercel.app  
 - 🔗 **API Backend:** https://experiencias-uy.vercel.app/api/v1  
@@ -30,9 +30,9 @@ Repositorio del backend:
 
 ---
 
-## ✨ Funcionalidades
+##  Funcionalidades
 
-### 👤 Autenticación y Autorización
+###  Autenticación y Autorización
 - Registro e inicio de sesión con roles diferenciados (`user` / `creator`)
 - Rutas protegidas con redirección automática según rol
 - Manejo de sesión desde estado global
@@ -41,7 +41,7 @@ Repositorio del backend:
 
 ---
 
-### 🎯 Funcionalidades para Usuarios
+###  Funcionalidades para Usuarios
 - Exploración del catálogo de experiencias disponibles
 - Reserva de experiencias indicando cantidad de participantes
 - Visualización del historial de reservas personales
@@ -51,7 +51,7 @@ Repositorio del backend:
 
 ---
 
-### 🛠️ Funcionalidades para Creadores (Dashboard)
+###  Funcionalidades para Creadores (Dashboard)
 - Publicación de nuevas experiencias (imágenes, precio, categoría, ubicación)
 - Edición y eliminación de experiencias propias
 - **Mapa interactivo** con geolocalización de experiencias (Leaflet)
@@ -64,13 +64,13 @@ Repositorio del backend:
 
 ---
 
-### 🗺️ Mapa de Experiencias
+###  Mapa de Experiencias
 - Visualización geográfica de experiencias en un mapa de Uruguay
 - Marcadores con información contextual (categoría, precio)
 
 ---
 
-## 🏗️ Arquitectura y Stack Tecnológico
+##  Arquitectura y Stack Tecnológico
 
 | Categoría | Tecnología |
 |---|---|
@@ -90,7 +90,7 @@ Repositorio del backend:
 
 ---
 
-## 📁 Estructura del Proyecto
+##  Estructura del Proyecto
 
 src/
 ├── assets/ # Recursos estáticos
@@ -114,7 +114,7 @@ src/
 
 ---
 
-## 🔐 Rutas de la Aplicación
+##  Rutas de la Aplicación
 
 | Ruta | Acceso | Rol |
 |---|---|---|
@@ -127,7 +127,7 @@ src/
 
 ---
 
-## ⚙️ Instalación y Uso Local
+##  Instalación y Uso Local
 
 ### Prerrequisitos
 - Node.js >= 18
