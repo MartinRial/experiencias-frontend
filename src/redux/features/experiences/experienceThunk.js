@@ -13,7 +13,6 @@ export const getExperienciasThunk = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await getExperienciasService();
-      console.log("📥 Respuesta GET todas:", response.data);
       return response.data?.experiences || response.data?.data || [];
     } catch (error) {
       return rejectWithValue(
