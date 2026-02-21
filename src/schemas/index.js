@@ -29,7 +29,7 @@ export const getLoginSchema = (t) =>
 export const registerSchema = (t) =>
   Yup.object({
     name: Yup.string()
-      .min(2, t("validations.min_name", { min: 2 })) // ✅ nombre con mensaje correcto
+      .min(2, t("validations.min_name", { min: 2 })) //  nombre con mensaje correcto
       .required(t("validations.required")),
 
     email: Yup.string()
@@ -37,7 +37,7 @@ export const registerSchema = (t) =>
       .required(t("validations.required")),
 
     password: Yup.string()
-      .min(6, t("validations.min_password", { min: 6 })) // ✅ contraseña con mensaje correcto
+      .min(6, t("validations.min_password", { min: 6 })) //  contraseña con mensaje correcto
       .required(t("validations.password_required")),
 
     repeatPassword: Yup.string()
