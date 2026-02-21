@@ -13,44 +13,41 @@ import "../styles/ExperienceList.css";
 
 const ExperienceList = ({ showAll, mine, experiences }) => {
   const dispatch = useDispatch();
-  const { list: reduxList, loading, error } = useSelector((s) => s.experienciasSlice);
+
+  const { list: reduxList, loading, error } = useSelector(
+    (s) => s.experienciasSlice
+  );
   const { user } = useSelector((s) => s.userSlice);
-  const { loading: bookingLoading } = useSelector((s) => s.bookingsSlice);
-  
+  const { loading: bookingLoading } = useSelector(
+    (s) => s.bookingsSlice
+  );
+
   const list = experiences || reduxList;
-  
+
   const [editingId, setEditingId] = useState(null);
   const [editPrice, setEditPrice] = useState("");
   const [bookingExperienceId, setBookingExperienceId] = useState(null);
 
   useEffect(() => {
-    if (!experiences) {
-      console.log("🔄 Cargando experiencias desde Redux...", { showAll, mine });
-      if (mine) {
-        dispatch(getExperienciasByUserThunk());
-      } else {
-        dispatch(getExperienciasThunk());
-      }
-    } else {
-      console.log("📦 Usando experiencias filtradas (prop):", experiences.length);
-    }
-  }, [dispatch, mine, showAll, experiences]);
+    if (experiences) return;
+
+    dispatch(
+      mine ? getExperienciasByUserThunk() : getExperienciasThunk()
+    );
+  }, [dispatch, mine, experiences]);
 
   const handleEditClick = (exp) => {
-    console.log("✏️ Editando experiencia:", exp);
     setEditingId(exp.id || exp._id);
     setEditPrice(exp.price);
   };
 
   const handleSaveEdit = async (exp) => {
     const expId = exp.id || exp._id;
-    
+
     if (!editPrice || editPrice <= 0) {
       toast.warning("⚠️ El precio debe ser mayor a 0");
       return;
     }
-
-    console.log("💾 Guardando cambios:", { id: expId, price: editPrice });
 
     try {
       await dispatch(
@@ -64,8 +61,7 @@ const ExperienceList = ({ showAll, mine, experiences }) => {
       setEditingId(null);
       setEditPrice("");
     } catch (error) {
-      console.error("❌ Error al actualizar:", error);
-      toast.error(`❌ Error: ${error}`);
+      toast.error(`❌ ${error}`);
     }
   };
 
@@ -79,52 +75,41 @@ const ExperienceList = ({ showAll, mine, experiences }) => {
 
     toast.warn(
       ({ closeToast }) => (
-        <div style={{ padding: '10px' }}>
-          <p style={{ marginBottom: '15px', fontWeight: '600' }}>
+        <div style={{ padding: "10px" }}>
+          <p style={{ marginBottom: "15px", fontWeight: 600 }}>
             ¿Eliminar "{exp.title}"?
           </p>
-          <p style={{ marginBottom: '15px', fontSize: '13px', color: '#666' }}>
+          <p style={{ marginBottom: "15px", fontSize: "13px", color: "#666" }}>
             Esta acción no se puede deshacer
           </p>
-          <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
+          <div
+            style={{
+              display: "flex",
+              gap: "10px",
+              justifyContent: "flex-end",
+            }}
+          >
             <button
-              onClick={() => {
-                closeToast();
-              }}
-              style={{
-                padding: '8px 16px',
-                background: '#6c757d',
-                color: 'white',
-                border: 'none',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                fontWeight: '500'
-              }}
+              onClick={closeToast}
+              className="btn-cancel-toast"
             >
               Cancelar
             </button>
             <button
               onClick={async () => {
                 closeToast();
-                console.log("🗑️ Eliminando experiencia:", expId);
-
                 try {
-                  await dispatch(deleteExperienciaThunk(expId)).unwrap();
-                  toast.success("✅ Experiencia eliminada correctamente");
+                  await dispatch(
+                    deleteExperienciaThunk(expId)
+                  ).unwrap();
+                  toast.success(
+                    "✅ Experiencia eliminada correctamente"
+                  );
                 } catch (error) {
-                  console.error("❌ Error al eliminar:", error);
-                  toast.error(`❌ Error: ${error}`);
+                  toast.error(`❌ ${error}`);
                 }
               }}
-              style={{
-                padding: '8px 16px',
-                background: '#dc3545',
-                color: 'white',
-                border: 'none',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                fontWeight: '500'
-              }}
+              className="btn-delete-toast"
             >
               🗑️ Eliminar
             </button>
@@ -141,7 +126,6 @@ const ExperienceList = ({ showAll, mine, experiences }) => {
     );
   };
 
-  // 🆕 FUNCIÓN PARA RESERVAR
   const handleBook = async (exp) => {
     const expId = exp.id || exp._id;
 
@@ -155,30 +139,23 @@ const ExperienceList = ({ showAll, mine, experiences }) => {
       return;
     }
 
-    console.log("🎯 Creando reserva para experiencia:", expId);
     setBookingExperienceId(expId);
 
     try {
-      const bookingData = {
-        experienceId: expId,
-        participants: 1,
-        date: new Date().toISOString(),
-      };
-
-      console.log("📤 Enviando datos de reserva:", bookingData);
-
-      await dispatch(createBookingThunk(bookingData)).unwrap();
+      await dispatch(
+        createBookingThunk({
+          experienceId: expId,
+          participants: 1,
+          date: new Date().toISOString(),
+        })
+      ).unwrap();
 
       toast.success("🎉 ¡Reserva realizada con éxito!");
-      
-      // Recargar experiencias para actualizar capacidad
-      if (mine) {
-        dispatch(getExperienciasByUserThunk());
-      } else {
-        dispatch(getExperienciasThunk());
-      }
+
+      dispatch(
+        mine ? getExperienciasByUserThunk() : getExperienciasThunk()
+      );
     } catch (error) {
-      console.error("❌ Error al reservar:", error);
       toast.error(`❌ ${error}`);
     } finally {
       setBookingExperienceId(null);
@@ -186,9 +163,7 @@ const ExperienceList = ({ showAll, mine, experiences }) => {
   };
 
   if (loading && !experiences) return <Spinner />;
-  
   if (error) return <div className="alert-error">⚠️ {error}</div>;
-  
   if (!list?.length) {
     return (
       <div className="empty-state">
@@ -205,7 +180,7 @@ const ExperienceList = ({ showAll, mine, experiences }) => {
             {mine ? "📋 Mis Experiencias" : "🌟 Descubre Experiencias Únicas"}
           </h2>
           <p className="list-subtitle">
-            {mine 
+            {mine
               ? "Gestiona tus experiencias publicadas"
               : "Encuentra tu próxima aventura en Uruguay"}
           </p>
@@ -215,14 +190,13 @@ const ExperienceList = ({ showAll, mine, experiences }) => {
       <div className="experience-grid">
         {list.map((exp) => {
           const expId = exp.id || exp._id;
-          const hasImages = exp.images && Array.isArray(exp.images) && exp.images.length > 0;
+          const hasImages = Array.isArray(exp.images) && exp.images.length > 0;
           const isEditing = editingId === expId;
           const isBooking = bookingExperienceId === expId;
           const hasCapacity = exp.capacity > 0;
 
           return (
             <div key={expId} className="experience-card">
-              {/* IMAGEN */}
               <div className="exp-image">
                 {hasImages ? (
                   <>
@@ -230,12 +204,14 @@ const ExperienceList = ({ showAll, mine, experiences }) => {
                       src={exp.images[0]}
                       alt={exp.title}
                       onError={(e) => {
-                        console.error("❌ Error cargando imagen:", exp.images[0]);
-                        e.target.src = "https://via.placeholder.com/400x250/667eea/ffffff?text=Sin+Imagen";
+                        e.target.src =
+                          "https://via.placeholder.com/400x250/667eea/ffffff?text=Sin+Imagen";
                       }}
                     />
                     {exp.images.length > 1 && (
-                      <span className="img-count">📷 {exp.images.length}</span>
+                      <span className="img-count">
+                        📷 {exp.images.length}
+                      </span>
                     )}
                   </>
                 ) : (
@@ -245,15 +221,11 @@ const ExperienceList = ({ showAll, mine, experiences }) => {
                   </div>
                 )}
 
-                {/* BADGE DE DISPONIBILIDAD */}
                 {!hasCapacity && (
-                  <div className="sold-out-badge">
-                    ❌ SIN CUPOS
-                  </div>
+                  <div className="sold-out-badge">❌ SIN CUPOS</div>
                 )}
               </div>
 
-              {/* CONTENIDO */}
               <div className="exp-content">
                 {exp.category && (
                   <span className="category-badge">
@@ -262,27 +234,28 @@ const ExperienceList = ({ showAll, mine, experiences }) => {
                 )}
 
                 <h3 className="exp-title">{exp.title}</h3>
-                
+
                 <p className="exp-description">
                   {exp.description?.length > 100
                     ? `${exp.description.substring(0, 100)}...`
                     : exp.description}
                 </p>
 
-                {/* DETALLES */}
                 <div className="exp-details">
                   <div className="exp-detail">
                     <span className="icon">📍</span>
                     <span>{exp.location}</span>
                   </div>
-                  
+
                   <div className="exp-detail">
                     <span className="icon">💰</span>
                     {isEditing ? (
                       <input
                         type="number"
                         value={editPrice}
-                        onChange={(e) => setEditPrice(e.target.value)}
+                        onChange={(e) =>
+                          setEditPrice(e.target.value)
+                        }
                         className="price-input-inline"
                         min="0"
                         step="50"
@@ -294,11 +267,14 @@ const ExperienceList = ({ showAll, mine, experiences }) => {
 
                   <div className="exp-detail">
                     <span className="icon">👥</span>
-                    <span className={!hasCapacity ? "text-danger" : ""}>
-                      {exp.capacity} {hasCapacity ? "cupos" : "SIN CUPOS"}
+                    <span
+                      className={!hasCapacity ? "text-danger" : ""}
+                    >
+                      {exp.capacity}{" "}
+                      {hasCapacity ? "cupos" : "SIN CUPOS"}
                     </span>
                   </div>
-                  
+
                   <div className="exp-detail">
                     <span className="icon">📅</span>
                     <span>
@@ -311,40 +287,36 @@ const ExperienceList = ({ showAll, mine, experiences }) => {
                   </div>
                 </div>
 
-                {/* BOTONES DE ACCIÓN */}
                 <div className="exp-actions">
-                  {/* 🆕 BOTÓN RESERVAR PARA USUARIOS */}
                   {user?.role === "user" && showAll && (
-                    <button 
-                      className={`btn-primary ${!hasCapacity ? "btn-disabled" : ""}`}
+                    <button
+                      className={`btn-primary ${
+                        !hasCapacity ? "btn-disabled" : ""
+                      }`}
                       onClick={() => handleBook(exp)}
                       disabled={!hasCapacity || isBooking}
                     >
-                      {isBooking ? (
-                        <>
-                          <span className="spinner-small"></span>
-                          Reservando...
-                        </>
-                      ) : !hasCapacity ? (
-                        "❌ Sin cupos"
-                      ) : (
-                        "🎫 Reservar Ahora"
-                      )}
+                      {isBooking
+                        ? "Reservando..."
+                        : !hasCapacity
+                        ? "❌ Sin cupos"
+                        : "🎫 Reservar Ahora"}
                     </button>
                   )}
-                  
-                  {/* BOTONES PARA CREADORES */}
+
                   {user?.role === "creator" && mine && (
                     <>
                       {isEditing ? (
                         <>
-                          <button 
+                          <button
                             className="btn-save"
-                            onClick={() => handleSaveEdit(exp)}
+                            onClick={() =>
+                              handleSaveEdit(exp)
+                            }
                           >
                             ✅ Guardar
                           </button>
-                          <button 
+                          <button
                             className="btn-cancel"
                             onClick={handleCancelEdit}
                           >
@@ -353,13 +325,15 @@ const ExperienceList = ({ showAll, mine, experiences }) => {
                         </>
                       ) : (
                         <>
-                          <button 
+                          <button
                             className="btn-edit"
-                            onClick={() => handleEditClick(exp)}
+                            onClick={() =>
+                              handleEditClick(exp)
+                            }
                           >
                             ✏️ Editar
                           </button>
-                          <button 
+                          <button
                             className="btn-delete"
                             onClick={() => handleDelete(exp)}
                           >
