@@ -10,7 +10,6 @@ export const getCategoriesThunk = createAsyncThunk(
       // El backend puede devolver { success: true, categories: [...] } o directamente [...]
       return response.data.categories || response.data;
     } catch (error) {
-      console.error(" Error en getCategoriesThunk:", error);
       return rejectWithValue(
         error.response?.data?.message || error.message || "Error al obtener categorías"
       );
