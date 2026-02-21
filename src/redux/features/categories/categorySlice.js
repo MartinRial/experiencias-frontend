@@ -24,12 +24,10 @@ const categorySlice = createSlice({
       .addCase(getCategoriesThunk.fulfilled, (state, action) => {
         state.loading = false;
         state.list = action.payload;
-        console.log("Categorías cargadas en Redux:", action.payload);
       })
       .addCase(getCategoriesThunk.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        console.error(" Error al cargar categorías:", action.payload);
       })
 
       // GET BY ID
