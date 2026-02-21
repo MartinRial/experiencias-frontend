@@ -49,7 +49,6 @@ const Dashboard = () => {
         contenido: `${exp.category?.name || 'Sin categoría'} • USD ${exp.price}`,
       }));
 
-    console.log("🗺️ Marcadores generados:", markers.length);
     setMarkersData(markers);
   }, [list]);
 
